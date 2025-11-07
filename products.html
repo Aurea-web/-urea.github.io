@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventas</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+<script defer src="app.js"></script>
+<script defer src="auth.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="nav-left">
+      <div class="logo">
+  <img src="img/ÁUREA/Logos/Logo circular simple negro (3).png" alt="Logo">
+</div>
+      <a class="tab" href="index.html">Inicio</a>
+      <a class="tab" href="products.html">Ventas</a>
+      <a class="tab" href="Kitderesina.html">Kit de resina</a>
+      <a class="tab" href="Nosotros.html">Nosotros</a>
+      <a class="tab" href="encuest.html">Encuesta</a>
+      <a class="tab" href="cart.html">Carrito <span class="kbd cart-count">0</span></a>
+    </div>
+    <div class="nav-right">
+      <span class="badge">🎁 Cada pieza, tu historia</span>
+      <!-- ESTE ES EL NUEVO BLOQUE DE CÓDIGO -->
+    <div id="auth-container">
+      <a id="login-link" class="tab" href="login.html">Login</a>
+      <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+        <span id="user-name" class="user-name"></span>
+        <button id="logout-btn" class="btn secondary" style="padding: 5px 10px; font-size: 0.9em;">Cerrar Sesión</button>
+      </div>
+    </div>
+    <!-- FIN DEL NUEVO BLOQUE -->
+    </div>
+  </header>
+
+<section class="hero">
+  <div class="grid-bg"></div>
+  <h1>Ventas</h1>
+  <p class="p">Productos disponibles. Filtra por categoría, precio y rating.</p>
+  <div class="toolbar">
+    <input id="q" class="input" placeholder="Buscar..." />
+    <select id="category">
+      <option value="all">Categoría
+    </select>
+    <select id="price">
+      
+  <option value="all">Precio</option>
+  <option value="low">Bajo (&lt; $10)</option>
+  <option value="mid">Medio ($10–$20)</option>
+  <option value="high">Alto (&ge; $20)</option>
+</select>
+  
+    <select id="rating">
+      <option value="all">Rating</option>
+      <option value="3">3+</option><option value="4">4+</option><option value="5">5</option>
+    </select>
+    <span id="count" class="badge"></span>
+  </div>
+  <div class="cards" id="cards"></div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", ()=> {
+  // Definir los productos directamente aquí
+  const PRODUCTS = [
+    {
+      id: 1,
+      name: "Llaveros",
+      price: 4.80,
+      category: "Accesorios",
+      series: "Básicos",
+      rating: 4.5,
+      img: "https://i.pinimg.com/1200x/b5/a3/5c/b5a35cd090d02a3fa46dc9207af599b1.jpg"
+    },
+    {
+      id: 2,
+      name: "Lapiceros",
+      price: 4.85,
+      category: "Escritura",
+      series: "Básicos",
+      rating: 4.3,
+      img: "https://i.pinimg.com/736x/ed/d4/80/edd480025339598fef987e93d23e1c0a.jpg"
+    },
+    {
+      id: 3,
+      name: "Pulseras personalizadas",
+      price: 5.95,
+      category: "Accesorios",
+      series: "Personalizados",
+      rating: 4.7,
+      img: "https://i.pinimg.com/1200x/b1/bc/fc/b1bcfc06b64e673c8dc090c8f314c334.jpg"
+    },
+    {
+      id: 4,
+      name: "Separadores personalizados",
+      price: 4.15,
+      category: "Oficina",
+      series: "Personalizados",
+      rating: 4.2,
+      img: "https://i.pinimg.com/736x/e5/b5/67/e5b56706268f0d485b23b6662d96667a.jpg"
+    },
+    {
+      id: 5,
+      name: "Portavasos",
+      price: 5.00,
+      category: "Hogar",
+      series: "Básicos",
+      rating: 4.0,
+      img: "https://i.pinimg.com/1200x/0a/19/29/0a1929549ecee8147f68803508e20508.jpg"
+    },
+    {
+      id: 6,
+      name: "Cases + PopSockets",
+      price: 20.00,
+      category: "Tecnología",
+      series: "Combos",
+      rating: 4.8,
+      img: "https://i.pinimg.com/1200x/48/2f/46/482f46e18781ec7ced9d2644acbc1152.jpg"
+    },
+    {
+      id: 7,
+      name: "Cuadros (fotos decoradas)",
+      price: 25.00,
+      category: "Decoración",
+      series: "Personalizados",
+      rating: 4.9,
+      img: "https://i.pinimg.com/1200x/ae/bf/63/aebf6312d83592594cb1be975e8e699b.jpg"
+    }
+  ];
+  
+  // Hacer que PRODUCTS esté disponible globalmente
+  window.ALL_ITEMS = PRODUCTS;
+  
+  // Inicializar la página con los productos
+  setupListingPage(PRODUCTS);
+});
+</script>
+
+  <footer class="footer">Cada pieza cuenta la historia que tú quieres contar</footer>
+</div>
+</body>
+</html>

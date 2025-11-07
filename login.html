@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login y Registro</title>
+<link rel="stylesheet" href="styles.css">
+<!-- Los scripts defer que ya tenías -->
+<script defer src="data.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="nav-left">
+      <div class="logo">
+        <img src="img/ÁUREA/Logos/Logo circular simple negro (3).png" alt="Logo">
+      </div>
+      <a class="tab" href="index.html">Inicio</a>
+      <a class="tab" href="products.html">Ventas</a>
+     <a class="tab" href="Kitderesina.html">Kit de resina</a>
+      <a class="tab" href="Nosotros.html">Nosotros</a>
+      <a class="tab" href="encuest.html">Encuesta</a>
+      <a class="tab" href="cart.html">Carrito <span class="kbd cart-count">0</span></a>
+    </div>
+    <div class="nav-right">
+      <span class="badge">🎁 Cada pieza, tu historia</span>
+      
+      <!-- Este bloque se actualizará con JavaScript para mostrar login o usuario logueado -->
+      <div id="auth-container">
+        <a id="login-link" class="tab" href="login.html">Login</a>
+        <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+          <span id="user-name" class="user-name"></span>
+          <button id="logout-btn" class="btn secondary" style="padding: 5px 10px; font-size: 0.9em;">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<section class="hero">
+  <div class="grid-bg"></div>
+  <h1 id="form-title">Iniciar Sesión</h1>
+  
+  <!-- Contenedor principal para los formularios -->
+  <div id="auth-form-container" class="panel" style="max-width:520px;margin:0 auto;background:var(--panel);padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.08)">
+    
+    <!-- FORMULARIO DE LOGIN -->
+    <form id="login-form" class="toolbar" style="flex-direction:column;gap:14px">
+      <input id="login-email" class="input" type="email" placeholder="Correo" required>
+      <input id="login-pass" class="input" type="password" placeholder="Contraseña" required>
+      <button class="btn primary" type="submit">Entrar</button>
+      <p style="text-align: center; margin-top: 15px;">
+        ¿No tienes cuenta? 
+        <a href="#" id="show-register" class="tab" style="padding: 0; font-size: 1em;">Regístrate aquí</a>
+      </p>
+    </form>
+
+    <!-- FORMULARIO DE REGISTRO -->
+    <form id="register-form" class="toolbar" style="flex-direction:column;gap:14px; display: none;">
+      <input id="register-email" class="input" type="email" placeholder="Correo" required>
+      <input id="register-pass" class="input" type="password" placeholder="Crea una contraseña" required>
+      <input id="register-pass-confirm" class="input" type="password" placeholder="Confirma tu contraseña" required>
+      <button class="btn primary" type="submit">Crear Cuenta</button>
+      <p style="text-align: center; margin-top: 15px;">
+        ¿Ya tienes cuenta? 
+        <a href="#" id="show-login" class="tab" style="padding: 0; font-size: 1em;">Inicia sesión</a>
+      </p>
+    </form>
+
+    <!-- Mensaje de error -->
+    <div id="error-message" class="error-message" style="color: #ff6b6b; margin-top: 15px; text-align: center; display: none;"></div>
+  </div>
+
+  <!-- Mensaje de bienvenida (oculto por defecto) -->
+  <div id="welcome-container" class="panel" style="max-width:520px;margin:0 auto;margin-top:20px;background:var(--panel);padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.08); display: none; text-align: center;">
+    <h2>¡Bienvenido!</h2>
+    <p>Has iniciado sesión correctamente. Serás redirigido en unos segundos...</p>
+    <div style="margin-top: 20px;">
+      <a href="index.html" class="btn primary">Ir al inicio ahora</a>
+    </div>
+  </div>
+</section>
+
+  <footer class="footer">Cada pieza cuenta la historia que tú quieres contar</footer>
+</div>
+
+<script>
+// --- SISTEMA DE AUTENTICACIÓN CON REGISTRO ---
+
+// Clave para guardar los usuarios en localStorage
+const USERS_DB_KEY = 'aurea_users_db';
+
+/**
+ * Obtiene la "base de datos" de usuarios desde localStorage.
+ * @returns {object} - Un objeto con los usuarios.
+ */
+function getUsersDB() {
+  const usersJSON = localStorage.getItem(USERS_DB_KEY);
+  return usersJSON ? JSON.parse(usersJSON) : {};
+}
+
+/**
+ * Guarda un nuevo usuario en la "base de datos" de localStorage.
+ * @param {string} email - El correo del usuario.
+ * @param {string} password - La contraseña del usuario.
+ * @returns {object} - Resultado de la operación.
+ */
+function registerUser(email, password) {
+  const users = getUsersDB();
+  const emailLower = email.toLowerCase();
+
+  if (users[emailLower]) {
+    return { success: false, message: "Este correo electrónico ya está registrado." };
+  }
+
+  users[emailLower] = { password: password, name: emailLower.split('@')[0] };
+  localStorage.setItem(USERS_DB_KEY, JSON.stringify(users));
+  
+  return { success: true, user: users[emailLower] };
+}
+
+/**
+ * Inicia sesión con un correo y contraseña.
+ * @param {string} email - El correo del usuario.
+ * @param {string} password - La contraseña del usuario.
+ * @returns {object} - Resultado de la operación.
+ */
+function loginUser(email, password) {
+  const users = getUsersDB();
+  const emailLower = email.toLowerCase();
+  const user = users[emailLower];
+
+  if (!user) {
+    return { success: false, message: "Correo no encontrado. ¿Quieres registrarte?" };
+  }
+
+  if (user.password !== password) {
+    return { success: false, message: "Contraseña incorrecta." };
+  }
+
+  return { success: true, user: user };
+}
+
+/**
+ * Guarda la sesión del usuario actual en sessionStorage.
+ * @param {object} user - El objeto del usuario a guardar.
+ */
+// POR ESTA:
+function saveSession(user) {
+  localStorage.setItem('authenticatedUser', JSON.stringify(user));
+}
+
+/**
+ * Cierra la sesión del usuario.
+ */
+function logout() {
+  localStorage.removeItem('authenticatedUser');
+  updateAuthUI();
+  // Si estamos en una página protegida, redirigir al login
+  if (window.location.pathname.includes('login.html')) {
+      // No hacer nada, ya estamos en login
+  } else {
+      // Opcional: podrías recargar la página para actualizar el estado
+      window.location.reload();
+  }
+}
+
+// POR ESTA:
+function isAuthenticated() {
+  return localStorage.getItem('authenticatedUser') !== null
+}
+
+function getAuthenticatedUser() {
+  const userJSON = localStorage.getItem('authenticatedUser');
+  return userJSON ? JSON.parse(userJSON) : null;
+}
+
+/**
+ * Actualiza la interfaz de usuario (UI) según el estado de autenticación.
+ */
+function updateAuthUI() {
+  const loginLink = document.getElementById('login-link');
+  const userInfo = document.getElementById('user-info');
+  const userNameSpan = document.getElementById('user-name');
+  const authFormContainer = document.getElementById('auth-form-container');
+  const welcomeContainer = document.getElementById('welcome-container');
+  const formTitle = document.getElementById('form-title');
+
+  if (isAuthenticated()) {
+    const user = getAuthenticatedUser();
+    
+    if (loginLink) loginLink.style.display = 'none';
+    if (userInfo) {
+      userInfo.style.display = 'flex';
+      userNameSpan.textContent = `Hola, ${user.name}`;
+    }
+
+    // Si estamos en la página de login/registro
+    if (authFormContainer) {
+      authFormContainer.style.display = 'none';
+      if (formTitle) formTitle.style.display = 'none';
+      if (welcomeContainer) welcomeContainer.style.display = 'block';
+    }
+  } else {
+    if (loginLink) loginLink.style.display = 'block';
+    if (userInfo) userInfo.style.display = 'none';
+
+    // Si estamos en la página de login/registro
+    if (authFormContainer) {
+      authFormContainer.style.display = 'block';
+      if (formTitle) formTitle.style.display = 'block';
+      if (welcomeContainer) welcomeContainer.style.display = 'none';
+    }
+  }
+}
+
+// --- MANEJO DE EVENTOS ---
+
+document.addEventListener('DOMContentLoaded', function() {
+  updateAuthUI();
+
+  // Referencias a elementos del DOM
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const showRegisterLink = document.getElementById('show-register');
+  const showLoginLink = document.getElementById('show-login');
+  const formTitle = document.getElementById('form-title');
+  const errorMessage = document.getElementById('error-message');
+
+  // --- EVENTOS DE TOGGLE ENTRE FORMULARIOS ---
+  showRegisterLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'flex';
+    formTitle.textContent = 'Crear Cuenta';
+    errorMessage.style.display = 'none';
+  });
+
+  showLoginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'flex';
+    formTitle.textContent = 'Iniciar Sesión';
+    errorMessage.style.display = 'none';
+  });
+
+  // --- EVENTO DE REGISTRO ---
+  registerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-pass').value;
+    const passwordConfirm = document.getElementById('register-pass-confirm').value;
+
+    if (password !== passwordConfirm) {
+      errorMessage.textContent = "Las contraseñas no coinciden.";
+      errorMessage.style.display = 'block';
+      return;
+    }
+
+    const result = registerUser(email, password);
+
+    if (result.success) {
+      // Si el registro es exitoso, iniciamos sesión automáticamente
+      saveSession(result.user);
+      updateAuthUI();
+      setTimeout(() => window.location.href = 'index.html', 2000);
+    } else {
+      errorMessage.textContent = result.message;
+      errorMessage.style.display = 'block';
+    }
+  });
+
+  // --- EVENTO DE LOGIN ---
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-pass').value;
+    
+    const result = loginUser(email, password);
+
+    if (result.success) {
+      saveSession(result.user);
+      updateAuthUI();
+      setTimeout(() => window.location.href = 'index.html', 2000);
+    } else {
+      errorMessage.textContent = result.message;
+      errorMessage.style.display = 'block';
+    }
+  });
+
+  // --- EVENTO DE LOGOUT ---
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuestros Productos</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+<script defer src="app.js"></script>
+<script defer src="auth.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="nav-left">
+      <div class="logo">
+  <img src="img/ÁUREA/Logos/Logo circular simple negro (3).png" alt="Logo">
+</div>
+      <a class="tab" href="index.html">Inicio</a>
+      <a class="tab" href="products.html">Ventas</a>
+      <a class="tab" href="Kitderesina.html">Kit de resina</a>
+      <a class="tab" href="Nosotros.html">Nosotros</a>
+      <a class="tab" href="encuest.html">Encuesta</a>
+      <a class="tab" href="cart.html">Carrito <span class="kbd cart-count">0</span></a>
+    </div>
+    <div class="nav-right">
+      <span class="badge">🎁 Cada pieza, tu historia</span>
+      <!-- ESTE ES EL NUEVO BLOQUE DE CÓDIGO -->
+    <div id="auth-container">
+      <a id="login-link" class="tab" href="login.html">Login</a>
+      <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+        <span id="user-name" class="user-name"></span>
+        <button id="logout-btn" class="btn secondary" style="padding: 5px 10px; font-size: 0.9em;">Cerrar Sesión</button>
+      </div>
+    </div>
+    <!-- FIN DEL NUEVO BLOQUE -->
+    </div>
+  </header>
+
+<section class="hero">
+  <div class="grid-bg"></div>
+  <h1>Nuestros Productos</h1>
+  
+  <div class="products-grid" id="products-container">
+    <!-- Los productos se cargarán aquí dinámicamente -->
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  const container = document.getElementById("products-container");
+  
+  // Función para formatear dinero
+  function money(amount) {
+    return "$" + amount.toFixed(2);
+  }
+  
+  // Función para agregar al carrito
+  function addToCart(item, quantity) {
+    // Esta función debería estar definida en app.js
+    // Si no existe, creamos una versión simple
+    if (typeof window.addToCart === 'function') {
+      window.addToCart(item, quantity);
+    } else {
+      alert(`Agregado: ${item.name} x${quantity}`);
+    }
+  }
+  
+  // Generar el HTML para cada producto
+  ALL_ITEMS.forEach(item => {
+    const productHTML = `
+      <div class="product-card">
+        <div class="product-image">
+          <img src="${item.img}" alt="${item.name}">
+        </div>
+        <div class="product-info">
+          <h3>${item.name}</h3>
+          <div class="product-meta">
+            <span class="tag">${item.series}</span>
+            <span class="rating">★ ${item.rating.toFixed(1)}</span>
+          </div>
+          <div class="product-price">${money(item.price)}</div>
+          <div class="product-actions">
+            <button class="btn primary add-to-cart" data-id="${item.id}">Agregar al carrito</button>
+            <a href="cart.html" class="btn">Ver carrito</a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    container.innerHTML += productHTML;
+  });
+  
+  // Agregar eventos a los botones de agregar al carrito
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+      const productId = parseInt(this.getAttribute('data-id'));
+      const product = ALL_ITEMS.find(item => item.id === productId);
+      if (product) {
+        addToCart(product, 1);
+      }
+    });
+  });
+});
+</script>
+
+  <footer class="footer">Cada pieza cuenta la historia que tú quieres contar</footer>
+</div>
+</body>
+</html>

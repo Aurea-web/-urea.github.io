@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrito</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+<script defer src="app.js"></script>
+<script defer src="auth.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="nav-left">
+      <div class="logo">
+  <img src="img/ÁUREA/Logos/Logo circular simple negro (3).png" alt="Logo">
+</div>
+      <a class="tab" href="index.html">Inicio</a>
+      <a class="tab" href="products.html">Ventas</a>
+      <a class="tab" href="Kitderesina.html">Kit de resina</a>
+      <a class="tab" href="Nosotros.html">Nosotros</a>
+      <a class="tab" href="encuest.html">Encuesta</a>
+      <a class="tab" href="cart.html">Carrito <span class="kbd cart-count">0</span></a>
+    </div>
+    <div class="nav-right">
+      <span class="badge">🎁 Cada pieza, tu historia</span>
+      <!-- ESTE ES EL NUEVO BLOQUE DE CÓDIGO -->
+    <div id="auth-container">
+      <a id="login-link" class="tab" href="login.html">Login</a>
+      <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+        <span id="user-name" class="user-name"></span>
+        <button id="logout-btn" class="btn secondary" style="padding: 5px 10px; font-size: 0.9em;">Cerrar Sesión</button>
+      </div>
+    </div>
+    <!-- FIN DEL NUEVO BLOQUE -->
+    </div>
+  </header>
+
+<section class="hero">
+<div id="cart-items"></div>
+<div class="cart-footer">
+  <br>
+  <div>Total: <span class="total">$0.00</span></div>
+  <div style="margin-top:20px">
+  <label for="pay-method"><strong>Método de pago:</strong></label>
+  <br>
+  <select id="pay-method" class="input hidden">
+    <option value="cash">Efectivo</option>
+    <option value="card">Tarjeta de crédito</option>
+  </select>
+
+  <div id="card-fields" class="hidden" style="margin-top:10px;display:grid;gap:10px;max-width:300px">
+    <input id="card-number" class="input" type="text" placeholder="Número de tarjeta">
+    <input id="card-exp" class="input" type="text" placeholder="MM/AA">
+    <input id="card-cvv" class="input" type="text" placeholder="CVV">
+  </div>
+</div>
+
+  <br>
+  <button id="pay-btn" class="btn primary hidden">Pagar ahora</button>
+  <button id="clear" class="btn">Vaciar carrito</button>
+</div>
+
+  <div class="toolbar">
+    <a class="btn" href="products.html">Seguir comprando</a>
+    
+  </div>
+</section>
+
+  <footer class="footer">Cada pieza cuenta la historia que tú quieres contar</footer>
+</div>
+</body>
+</html>

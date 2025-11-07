@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Welcome</title>
+<style>
+:root{
+  --bg:#F4F4F4; --panel:#FFFFFF; --surface:#FFEFE6;
+  --grid:#FFD1B3; --text:#1A1A1A; --muted:#6B6B6B;
+  --primary:#FF3B00; --primary-2:#FF6B35; --accent:#FFB703;
+  --radius:18px; --shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue";
+  color:var(--text); 
+  background: radial-gradient(1200px 600px at 80% -10%, rgba(255,107,53,.1), transparent),
+              radial-gradient(900px 500px at -20% -30%, rgba(255,59,0,.08), transparent),
+              var(--bg);
+  display:flex; align-items:center; justify-content:center; padding:48px; overflow-x:hidden;
+  position:relative;
+}
+.container{
+  width:100%; max-width:1200px; background:var(--panel); border-radius:var(--radius);
+  box-shadow: var(--shadow); overflow:hidden; position:relative;
+}
+.nav{
+  display:flex; gap:24px; align-items:center; padding:28px 40px;
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.logo{
+  display:flex; align-items:center; justify-content:center;
+  width:48px; height:48px; border-radius:12px; overflow:hidden; 
+  box-shadow: var(--shadow); background:linear-gradient(135deg,var(--primary),var(--primary-2));
+}
+.logo img{
+  max-width:100%; max-height:100%; object-fit:contain; display:block;
+  animation: logoPulse 2s ease-in-out infinite alternate;
+}
+@keyframes logoPulse{
+  0%{transform: scale(1) rotate(0deg)}
+  100%{transform: scale(1.12) rotate(5deg)}
+}
+.nav a{
+  color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:12px; font-weight:600; transition:all .2s;
+}
+.nav a:hover{background:var(--surface); color:var(--text);}
+.hero{
+  display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; padding:40px;
+}
+.left{
+  display:flex; align-items:center; justify-content:center; position:relative; min-height:420px;
+}
+.scene{
+  width:420px; height:350px; border-radius:28px; background: var(--surface);
+  display:flex; align-items:center; justify-content:center; box-shadow: var(--shadow);
+  position:relative; overflow:hidden;
+  animation: sceneEntrance 1s ease-out forwards; opacity:0; transform:translateY(30px);
+}
+@keyframes sceneEntrance{
+  to{opacity:1; transform:translateY(0);}
+}
+.scene img{
+  max-width:240px; border-radius:24px; animation: floatRotate 5s ease-in-out infinite alternate;
+}
+@keyframes floatRotate{
+  0%{transform: translateY(0px) rotate(0deg) scale(1)}
+  50%{transform: translateY(-18px) rotate(5deg) scale(1.05)}
+  100%{transform: translateY(0px) rotate(-5deg) scale(1)}
+}
+.bubble{ position:absolute; border-radius:50%; background:rgba(255,255,255,0.6); border:2px solid rgba(255,255,255,0.85); box-shadow:0 6px 12px rgba(0,0,0,0.05); }
+.bubble.one{ width:18px; height:18px; left:10%; top:10%; animation: floatUp 6s linear infinite }
+.bubble.two{ width:10px; height:10px; left:18%; top:4%; animation: floatUp 5s linear infinite; animation-delay:0.7s }
+.bubble.three{ width:20px; height:20px; left:30%; top:6%; animation: floatUp 7s linear infinite; animation-delay:0.3s }
+.bubble.four{ width:14px; height:14px; left:50%; top:20%; animation: floatUp 8s linear infinite; animation-delay:0.5s }
+@keyframes floatUp{ 0%{ transform: translateY(20px) scale(0.9); opacity:0.6} 100%{ transform: translateY(-40px) scale(1); opacity:1 } }
+
+.right{
+  padding:24px 32px; animation: rightEntrance 1s ease-out forwards; opacity:0; transform:translateX(30px);
+}
+@keyframes rightEntrance{
+  to{opacity:1; transform:translateX(0);}
+}
+h1{
+  margin:0 0 12px 0; font-size:54px; line-height:1; letter-spacing:-1px;
+  background:linear-gradient(135deg, var(--primary), var(--primary-2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;
+}
+.subtitle{ font-weight:700; color:var(--primary-2); font-size:18px; margin-bottom:8px }
+p.lead{ color: var(--muted); max-width:520px }
+
+.cta-row{ display:flex; gap:16px; margin-top:22px }
+.btn{
+  padding:12px 22px; border-radius:999px; border:none; background:linear-gradient(135deg, var(--primary), var(--primary-2));
+  color:white; font-weight:700; cursor:pointer; box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.btn:hover{ transform:translateY(-4px) scale(1.08); box-shadow:0 25px 45px rgba(0,0,0,0.25); }
+
+.ghost{
+  padding:12px 20px; border-radius:999px; border:2px solid var(--primary); background:transparent; color:var(--primary); font-weight:700;
+}
+
+.dots{ display:flex; gap:8px; margin-top:28px }
+.dot{ width:10px; height:10px; border-radius:50%; background:var(--grid); animation: dotBounce 1.2s infinite alternate;}
+.dot:nth-child(2){animation-delay:0.2s;}
+.dot:nth-child(3){animation-delay:0.4s;}
+@keyframes dotBounce{0%{transform:translateY(0)}100%{transform:translateY(-8px)}}
+
+/* Fondo dinámico de brillos */
+@keyframes shine{0%,100%{opacity:0.3}50%{opacity:0.6}}
+body::before{
+  content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 30%, rgba(255,195,0,0.08), transparent), radial-gradient(circle at 70% 70%, rgba(255,59,0,0.05), transparent);
+  animation: shine 6s ease-in-out infinite;
+}
+
+@media (max-width:900px){
+  .hero{ grid-template-columns: 1fr; padding:24px }
+  .scene{ width:90%; height:300px }
+  h1{ font-size:36px }
+  body{ padding:20px }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <nav class="nav">
+    
+    <a href="https://www.instagram.com/aurea.resina.sv?igsh=NjdleWd1aG16Mmgy">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="https://www.tiktok.com/@aurea.resina?_t=ZM-90gXHJdluO4&_r=1">TikTok</a>
+    <a href="index.html">Tienda</a>
+  </nav>
+
+  <section class="hero">
+    <div class="left">
+      <div class="scene">
+        <img src="img/ÁUREA/Logos/Logo circular simple negro (2).png" alt="Animación imagen" />
+        <div class="bubble one"></div>
+        <div class="bubble two"></div>
+        <div class="bubble three"></div>
+        <div class="bubble four"></div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="subtitle">Historia</div>
+      <h1>Tu Momento</h1>
+      <p class="lead">Arte en resina con significado. Diseñamos accesorios y detalles personalizados que encapsulan lo que más amas. Todo es hecho a mano, con paciencia y dedicación, para que lleves contigo una historia en cada pieza. Descubre el poder de un recuerdo que puedes tocar.</p>
+
+      <div class="cta-row">
+        <a href="index.html" class="btn">Tienda</a>
+        <a href="Nosotros.html" class="ghost">Nosotros</a>
+      </div>
+
+      <div class="dots" role="list">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const sceneImg = document.querySelector('.scene img');
+  let t = 0;
+  function loop(){
+    t += 0.02;
+    const x = Math.sin(t*1.2) * 10;
+    const y = Math.cos(t * 0.7) * 8;
+    const rotate = Math.sin(t*0.5) * 5;
+    sceneImg.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

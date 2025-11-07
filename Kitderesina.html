@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kit de Resina - ÁUREA</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+<script defer src="app.js"></script>
+<script defer src="auth.js"></script>
+<style>
+/* Estilos específicos para la página de Kit de Resina */
+.kit-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 30px 0;
+  align-items: center;
+}
+
+.kit-images {
+  flex: 1;
+  min-width: 300px;
+}
+
+.kit-main-image {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+}
+
+.kit-thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.kit-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.kit-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.kit-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.kit-title {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.kit-description {
+  margin-bottom: 25px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.kit-features {
+  margin-bottom: 25px;
+}
+
+.kit-features h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.kit-features ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.kit-features li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  padding-left: 25px;
+}
+
+.kit-features li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.kit-price-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.kit-price {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+
+.kit-gallery {
+  margin: 40px 0;
+}
+
+.kit-gallery h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.kit-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.kit-gallery-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.kit-gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+.kit-gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.kit-gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .kit-showcase {
+    flex-direction: column;
+  }
+  
+  .kit-price-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="nav-left">
+      <div class="logo">
+  <img src="img/ÁUREA/Logos/Logo circular simple negro (3).png" alt="Logo">
+</div>
+
+      <a class="tab" href="index.html">Inicio</a>
+      <a class="tab" href="products.html">Ventas</a>
+      <a class="tab" href="Kitderesina.html">Kit de resina</a>
+      <a class="tab" href="Nosotros.html">Nosotros</a>
+     <a class="tab" href="encuest.html">Encuesta</a>
+      <a class="tab" href="cart.html">Carrito <span class="kbd cart-count">0</span></a>
+    </div>
+    <div class="nav-right">
+      <span class="badge">🎁 Cada pieza, tu historia</span>
+      <!-- ESTE ES EL NUEVO BLOQUE DE CÓDIGO -->
+    <div id="auth-container">
+      <a id="login-link" class="tab" href="login.html">Login</a>
+      <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+        <span id="user-name" class="user-name"></span>
+        <button id="logout-btn" class="btn secondary" style="padding: 5px 10px; font-size: 0.9em;">Cerrar Sesión</button>
+      </div>
+    </div>
+    <!-- FIN DEL NUEVO BLOQUE -->
+    </div>
+  </header>
+
+<section class="hero">
+  <div class="grid-bg"></div>
+  <h1>Kit de Resina</h1>
+  <p class="p">Todo lo que necesitas para crear tus propias piezas únicas con resina epóxica. Nuestro kit incluye materiales de alta calidad y todo lo necesario para empezar.</p>
+  
+  <div class="kit-showcase">
+    <div class="kit-images">
+      <img id="main-image" class="kit-main-image" src="https://z-cdn-media.chatglm.cn/files/faf4e4e9-0662-43a9-aa75-1f26149d5a59_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.57_949cf793.jpg?auth_key=1862382157-4c22bd421939415099bbc121f14a8c8a-0-3ea8332b522b23ceac7df642aa232576" alt="Kit de Resina ÁUREA">
+      <div class="kit-thumbnails">
+        <img class="kit-thumbnail" src="https://z-cdn-media.chatglm.cn/files/faf4e4e9-0662-43a9-aa75-1f26149d5a59_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.57_949cf793.jpg?auth_key=1862382157-4c22bd421939415099bbc121f14a8c8a-0-3ea8332b522b23ceac7df642aa232576" alt="Vista 1">
+        <img class="kit-thumbnail" src="https://z-cdn-media.chatglm.cn/files/d862fc70-e459-4a09-bead-814cc72cdf12_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.56_2338f718.jpg?auth_key=1862382157-96fcf657afc140b0815ccca9da662db2-0-2623d5155e447c28a7a2c994cc6004ad" alt="Vista 2">
+        <img class="kit-thumbnail" src="https://z-cdn-media.chatglm.cn/files/fc958c48-6c3a-4b4e-b264-ae12e33a5b99_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.57_ccef9c90.jpg?auth_key=1862382157-9386a072d3f24a33b10ba6e047ef82a8-0-ccbc3477a0167998ae5b86d167c215ae" alt="Vista 3">
+        <img class="kit-thumbnail" src="https://z-cdn-media.chatglm.cn/files/b9344bf8-d99a-479d-b0c0-9ee4b1940dca_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.38_cc936c6f.jpg?auth_key=1862382157-2658630a17734b0b9da775cd9aab5f02-0-2dbda1868d73bd0ca77815d2c3b49822" alt="Vista 4">
+        <img class="kit-thumbnail" src="https://i.postimg.cc/SN41601G/Imagen-de-Whats-App-2025-11-04-a-las-19-27-39-ce9b9c55.jpg" alt="Vista 5">
+        <img class="kit-thumbnail" src="https://z-cdn-media.chatglm.cn/files/0e7f7a03-75c9-4067-baa8-b9da157c79d7_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.39_8fc41840.jpg?auth_key=1862382157-95b58ff2a37d4883b1957105bda74c25-0-fa43725fffa682308d26826d66785590" alt="Vista 6">
+      </div>
+    </div>
+    
+    <div class="kit-info">
+      <h2 class="kit-title">Kit de Resina ÁUREA</h2>
+      <p class="kit-description">
+        Nuestro kit de resina epóxica ha sido diseñado para principiantes y expertos por igual. 
+        Con materiales de la más alta calidad, podrás crear piezas únicas y personalizadas que 
+        reflejarán tu estilo y creatividad.
+      </p>
+      
+      <div class="kit-features">
+        <h3>¿Qué incluye el kit?</h3>
+        <ul>
+          <li>Resina epóxica de alta calidad (2-500ml)</li>
+          <li>Pigmentos y colorantes variados (8 colores)</li>
+          <li>Herramientas básicas de aplicación</li>
+          <li>Guía de cuidados y recomendaciones</li>
+        </ul>
+      </div>
+      
+      <div class="kit-price-section">
+        <span class="kit-price">$15.00</span>
+        <button id="buy-kit" class="btn primary">Comprar Kit</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="kit-gallery">
+    <h2>Algunos proyectos que puedes crear</h2>
+    <div class="kit-gallery-grid">
+      <div class="kit-gallery-item">
+        <img src="https://i.pinimg.com/736x/ac/7a/e3/ac7ae31c3d9a3724499dcbfb80e0f08d.jpg" alt="Pulseras de Resina">
+        <div class="kit-gallery-caption">Pulseras de Resina</div>
+      </div>
+      <div class="kit-gallery-item">
+        <img src="https://i.pinimg.com/736x/fb/c0/de/fbc0de2e814b3f2c3c4021abf08b4ca5.jpg" alt="Llaveros Personalizados">
+        <div class="kit-gallery-caption">Llaveros Personalizados</div>
+      </div>
+      <div class="kit-gallery-item">
+        <img src="https://i.pinimg.com/1200x/61/1f/e2/611fe25dafc68ffdc442e9ba25a24938.jpg" alt="Portavasos Decorativos">
+        <div class="kit-gallery-caption">Portavasos Decorativos</div>
+      </div>
+      <div class="kit-gallery-item">
+        <img src="https://i.pinimg.com/1200x/9b/88/8f/9b888f8c5966a30f5ae6cc79631f1f5c.jpg" alt="Figuras Decorativas">
+        <div class="kit-gallery-caption">Figuras Decorativas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  // Funcionalidad para cambiar la imagen principal al hacer clic en las miniaturas
+  const mainImage = document.getElementById('main-image');
+  const thumbnails = document.querySelectorAll('.kit-thumbnail');
+  
+  thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+      mainImage.src = this.src;
+    });
+  });
+  
+  // Configurar el botón de compra
+  document.getElementById('buy-kit').addEventListener('click', function() {
+    // Agregar el kit al carrito
+    const kitItem = {
+      id: 100,
+      name: "Kit de Resina ÁUREA",
+      price: 35.00,
+      category: "Kits",
+      series: "Resina",
+      rating: 5.0,
+      img: "https://z-cdn-media.chatglm.cn/files/faf4e4e9-0662-43a9-aa75-1f26149d5a59_Imagen%20de%20WhatsApp%202025-11-04%20a%20las%2019.27.57_949cf793.jpg?auth_key=1862382157-4c22bd421939415099bbc121f14a8c8a-0-3ea8332b522b23ceac7df642aa232576"
+    };
+    
+    // Usar la función addToCart de app.js si está disponible
+    if (typeof addToCart === 'function') {
+      addToCart(kitItem, 1);
+    } else {
+      alert("Kit de Resina ÁUREA agregado al carrito");
+    }
+  });
+});
+</script>
+
+  <footer class="footer">Cada pieza cuenta la historia que tú quieres contar</footer>
+</div>
+</body>
+</html>

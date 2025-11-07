@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encuesta de Satisfacción</title>
+  <style>
+    /* 🎨 Estilos base elegantes */
+    :root {
+      --bg:#F4F4F4;
+      --panel:#FFFFFF;
+      --surface:#FFEFE6;
+      --grid:#FFD1B3;
+      --text:#1A1A1A;
+      --muted:#6B6B6B;
+      --primary:#FF3B00;
+      --primary-2:#FF6B35;
+      --accent:#FFB703;
+      --radius:18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(255,107,53,.1), transparent),
+                  radial-gradient(900px 500px at -20% -30%, rgba(255,59,0,.08), transparent),
+                  var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* 🔹 Header */
+    .header{
+      display:flex;
+      justify-content:center;
+      padding:16px 22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.5));
+      border:1px solid rgba(0,0,0,.06);
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(8px);
+      z-index:20;
+    }
+    .menu{list-style:none;display:flex;gap:22px}
+    .menu li a{
+      padding:10px 16px;
+      border-radius:12px;
+      color:var(--muted);
+      transition:0.3s;
+    }
+    .menu li a:hover,
+    .menu li a.active{
+      background:var(--surface);
+      color:var(--primary);
+    }
+
+    /* 🔹 Hero */
+    .hero{
+      margin-top:40px;
+      text-align:center;
+      padding:60px 20px 30px;
+      position:relative;
+    }
+    .grid-bg{
+      position:absolute;inset:0;border-radius:28px;
+      background-image:linear-gradient(transparent 23px, var(--grid) 24px),
+                        linear-gradient(90deg, transparent 23px, var(--grid) 24px);
+      background-size:24px 24px;
+      opacity:.15;
+      mask: radial-gradient(900px 400px at center 10%, #000, transparent 70%);
+      pointer-events:none;
+    }
+    h1{font-size:42px;margin-bottom:12px}
+    .p{color:var(--muted);max-width:700px;margin:0 auto;font-size:18px}
+
+    /* 🔹 Cards */
+    .cards{display:flex;justify-content:center;margin-top:28px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:22px;
+      box-shadow: var(--shadow);
+      padding:24px;
+      width:100%;
+      max-width:500px;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(20px);}
+      to {opacity:1; transform:none;}
+    }
+
+    /* 🔹 Formulario */
+    .survey-form{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .survey-form label{
+      font-weight:600;
+      color:var(--text);
+      text-align:left;
+    }
+    .survey-form input,
+    .survey-form select,
+    .survey-form textarea{
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,.08);
+      background:var(--surface);
+      font-size:15px;
+      outline:none;
+      transition:border .2s ease, box-shadow .2s ease;
+    }
+    .survey-form input:focus,
+    .survey-form select:focus,
+    .survey-form textarea:focus{
+      border:1px solid var(--primary);
+      box-shadow:0 0 0 3px rgba(255,59,0,0.15);
+    }
+
+    /* 🔹 Botón */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:12px 16px;
+      border-radius:14px;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;font-weight:700;
+      cursor:pointer;
+      border:none;
+      transition:transform .15s ease, box-shadow .2s ease;
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.25)}
+
+    /* 🔹 Mensaje de éxito */
+    .success {
+      display:none;
+      text-align:center;
+      font-size:1.2rem;
+      font-weight:bold;
+      margin-top:20px;
+      color:green;
+      animation:popIn 0.6s ease;
+    }
+    @keyframes popIn {from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
+
+    /* 🎉 Confetti */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      top: 0;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: confettiFall 3s linear forwards;
+      z-index: 9999;
+    }
+    @keyframes confettiFall {
+      to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* 🔹 Footer */
+    .footer{color:var(--muted);text-align:center;padding:50px 0}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="products.html">Productos</a></li>
+        <li><a class="tab" href="Kitderesina.html">Kit de resina</a></li>
+        <li><a class="tab" href="Nosotros.html">Nosotros</a></li>
+        <li><a href="cart.html">Carrito</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="survey.html" class="active">Encuesta</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="grid-bg"></div>
+      <h1>Encuesta de Satisfacción</h1>
+      <p class="p">Tu opinión es muy importante para nosotros. Por favor completa este breve formulario:</p>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <div class="content">
+          <form class="survey-form" id="surveyForm">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" placeholder="Escribe tu nombre..." required>
+
+            <label for="rating">¿Cómo calificarías tu experiencia?</label>
+            <select id="rating" name="rating" required>
+              <option value="5">Excelente</option>
+              <option value="4">Muy buena</option>
+              <option value="3">Buena</option>
+              <option value="2">Regular</option>
+              <option value="1">Mala</option>
+            </select>
+
+            <label for="comments">Comentarios:</label>
+            <textarea id="comments" name="comments" rows="4" placeholder="Escribe tus sugerencias aquí..."></textarea>
+
+            <button type="submit" class="btn">Enviar</button>
+          </form>
+          <div class="success" id="successMsg">✅ ¡Gracias por tu respuesta!</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 ÁUREA - Gracias por tu confianza</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("surveyForm");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      successMsg.style.display = "block";
+      launchConfetti();
+      form.reset();
+    });
+
+    function launchConfetti(){
+      for(let i=0; i<40; i++){
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random()*100 + "vw";
+        confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.animationDuration = (Math.random()*2+2)+"s";
+        document.body.appendChild(confetti);
+        setTimeout(()=>confetti.remove(),3000);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Abrir index.html. Productos (96) y coleccionables (37) se generan en data.js. Cada detalle se abre en product.html?id=ID&type=... Carrito con localStorage, login demo.
